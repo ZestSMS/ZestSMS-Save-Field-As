@@ -20,11 +20,12 @@
                 var field_connection = $(this),
                     field_control_wrapper = field_connection.parent(),
                     connections_toggle = field_connection.siblings('.fl-field-connections-toggle'),
-                    zestsms_save_field_as_value = field_control_wrapper.find('.zestsms-save-field-as-value');
+                    zestsms_save_field_as_value = field_control_wrapper.find('.zestsms-save-field-as-value'),
+                    zestsms_save_field_as_settings = (zestsms_save_field_as_value.val() !== '') ? JSON.parse(zestsms_save_field_as_value.val()) : '';
 
                 field_control_wrapper.addClass('zestsms-save-field-as');
 
-                if( zestsms_save_field_as_value.val() !== '') {
+                if( zestsms_save_field_as_settings !== '' && ! zestsms_save_field_as_settings.delete ) {
                     field_control_wrapper.addClass('is-saved');
                     connections_toggle.hide();
                 } else {
@@ -149,36 +150,38 @@
 
     ZestSMSSaveFieldAsSettings._init();
 
-    FLBuilder.registerModuleHelper('zestsms_save_field_as', {
-        init: function () {
-            var form = $('.zestsms-save-field-as-settings'),
-                type = form.find('select[name=type]');
-
-            this._typeChanged();
-
-            type.on('change', this._typeChanged);
-        },
-
-        _typeChanged: function () {
-            var form = $('.fl-builder-settings'),
-                type = form.find('select[name=type]').val(),
-                key = form.find('select[name=key]'),
-                key_val = key.val(),
-                option = form.find('input[name=option]');
-
-            key.rules('remove');
-            option.rules('remove');
-
-            if (type == 'wp_option') {
-                option.rules('add', {
-                    required: true
-                });
-            } else if (type == 'post_meta') {
-                key.rules('add', {
-                    required: true
-                });
-            }
-        }
-    });
+    // FLBuilder.registerModuleHelper('zestsms_save_field_as', {
+    //     init: function () {
+    //         var form = $('.zestsms-save-field-as-settings');
+    //
+    //         if( form.length ) {
+    //             var type = form.find('select[name=type]')
+    //
+    //             this._typeChanged();
+    //             type.on('change', this._typeChanged);
+    //         }
+    //     },
+    //
+    //     _typeChanged: function () {
+    //         var form = $('.fl-builder-settings'),
+    //             type = form.find('select[name=type]').val(),
+    //             key = form.find('select[name=key]'),
+    //             key_val = key.val(),
+    //             option = form.find('input[name=option]');
+    //
+    //         key.rules('remove');
+    //         option.rules('remove');
+    //
+    //         if (type == 'wp_option') {
+    //             option.rules('add', {
+    //                 required: true
+    //             });
+    //         } else if (type == 'post_meta') {
+    //             key.rules('add', {
+    //                 required: true
+    //             });
+    //         }
+    //     }
+    // });
 
 })(jQuery);
