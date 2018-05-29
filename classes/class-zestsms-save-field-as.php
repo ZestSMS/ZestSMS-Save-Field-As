@@ -4,7 +4,7 @@ final class ZestSaveFieldAs {
 
     static public function init() {
         add_action('init', __CLASS__ . '::register_form');
-        add_filter('fl_builder_after_control', __CLASS__ . '::save_field_as_buttons', 10, 4);
+        add_filter('fl_builder_before_control', __CLASS__ . '::save_field_as_buttons', 9, 4);
         add_filter('fl_builder_node_settings', __CLASS__ . '::set_defaults', 10, 2);
         add_action('fl_builder_before_render_ajax_layout', __CLASS__ . '::before_render_ajax_layout', 10, 2);
         add_action('fl_builder_before_save_layout', __CLASS__ . '::update_post', 10, 4);
@@ -79,7 +79,7 @@ final class ZestSaveFieldAs {
     static public function save_field_as_buttons($name, $value, $field, $settings) {
         global $post;
 
-        if ( ! $field['connections']) {
+        if ( !array_key_exists('connections', $field)) {
             return;
         }
 
@@ -100,10 +100,15 @@ final class ZestSaveFieldAs {
             }
         }
 
+        echo '<div class="zestsms-save-field-as-controls"  data-saved="';
+        echo ( $zestsms_save_field_as ) ? 'true' : 'false';
+        echo '">';
+
         echo '<i class="fa fa-link zestsms-save-field-as-button zestsms-save-field-as-button-add zestsms-create-save-field-as-button" data-type="zestsms_save_field_as" title="' . __('Save field as', 'zestsms') . '"></i>';
         echo '<i class="fa fa-wrench zestsms-save-field-as-button zestsms-save-field-as-button-edit zestsms-edit-save-field-as-button" data-type="zestsms_save_field_as" title="' . __('Edit field save settings', 'zestsms') . '"></i>';
         echo '<i class="fa fa-unlink zestsms-save-field-as-button zestsms-save-field-as-button-edit zestsms-remove-save-field-as-button" data-type="zestsms_save_field_as" title="' . __('Unlink field save settings', 'zestsms') . '"></i>';
-        if (is_object($settings->zestsms_save_field_as[$name])) {
+
+        if (isset($settings->zestsms_save_field_as[$name])) {
             if (property_exists($settings->zestsms_save_field_as[$name], 'key')) {
                 echo '<i class="fa fa-trash-o zestsms-save-field-as-button zestsms-save-field-as-button-edit zestsms-trash-save-field-as-button" data-type="zestsms_save_field_as" title="' . __('Unlink field save settings and DELETE in database', 'zestsms') . '"></i>';
             }
@@ -114,6 +119,8 @@ final class ZestSaveFieldAs {
             echo json_encode($zestsms_save_field_as);
         }
         echo '\' />';
+
+        echo '</div>';
     }
 
     static public function set_defaults($settings, $node) {
@@ -132,7 +139,7 @@ final class ZestSaveFieldAs {
             }
         }
 
-        if (is_object($settings) && is_array($settings->zestsms_save_field_as)) {
+        if (is_object($settings) && isset($settings->zestsms_save_field_as)) {
             foreach ($settings->zestsms_save_field_as as $field => $field_meta) {
                 if (isset($field_meta->type)) {
                     $post_meta = '';

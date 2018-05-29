@@ -30,8 +30,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 define( 'ZESTSMS_SAVE_FIELD_AS_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 define( 'ZESTSMS_SAVE_FIELD_AS_PLUGIN_URL', plugins_url( '/', __FILE__ ) );
 
-if( class_exists( 'FLBuilder') ) {
-    require_once( ZESTSMS_SAVE_FIELD_AS_PLUGIN_DIR .'classes/class-zestsms-save-field-as.php' );
+add_action('plugins_loaded', 'zestsms_save_field_as_init');
+function zestsms_save_field_as_init() {
+    if (class_exists('FLBuilder')) {
+        require_once(ZESTSMS_SAVE_FIELD_AS_PLUGIN_DIR . 'classes/class-zestsms-save-field-as.php');
+    }
 }
 
 add_action('wp_enqueue_scripts', 'zestsms_save_field_as_scripts');

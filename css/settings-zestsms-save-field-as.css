@@ -32,24 +32,21 @@
 .fl-field-control .zestsms-trash-save-field-as-button {
     right: -25px !important;
 }
-/*.fl-field-control .zestsms-save-field-as:hover .zestsms-save-field-as-button {*/
-/*display: inline-flex;*/
-/*}*/
-.fl-field-control .zestsms-save-field-as.is-saved input,
-.fl-field-control .zestsms-save-field-as.is-saved .fl-photo-field {
+.fl-field-control .zestsms-save-field-as-controls[data-saved="true"] ~ input,
+.fl-field-control .zestsms-save-field-as-controls[data-saved="true"] ~ .fl-photo-field {
     background: #beffbe !important;
 }
-.fl-field-control .zestsms-save-field-as.is-saved input,
-.fl-field-control .zestsms-save-field-as.is-saved textarea {
+.fl-field-control .zestsms-save-field-as-controls[data-saved="true"] ~ input,
+.fl-field-control .zestsms-save-field-as-controls[data-saved="true"] ~ textarea {
     padding-right: 55px;
 }
-.fl-field-control .zestsms-save-field-as.not-saved input,
-.fl-field-control .zestsms-save-field-as.not-saved textarea {
+.fl-field-control .zestsms-save-field-as-controls[data-saved="false"] ~ input,
+.fl-field-control .zestsms-save-field-as-controls[data-saved="false"] ~ textarea {
     padding-right: 25px;
 }
 
-.fl-field-control .zestsms-save-field-as.not-saved .zestsms-save-field-as-button-edit,
-.fl-field-control .zestsms-save-field-as.is-saved .zestsms-save-field-as-button-add,
-.fl-field-control .zestsms-save-field-as.is-saved .fl-field-connections-toggle {
+.fl-field-control .zestsms-save-field-as-controls[data-saved="false"] .zestsms-save-field-as-button-edit,
+.fl-field-control .zestsms-save-field-as-controls[data-saved="true"] .zestsms-save-field-as-button-add,
+.fl-field-control .zestsms-save-field-as-controls[data-saved="true"] ~ .fl-field-connections-toggle {
     display: none !important;
 }
